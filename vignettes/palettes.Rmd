@@ -1,0 +1,106 @@
+---
+title: "palettes"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{palettes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(jonohey)
+```
+
+
+```{r}
+# show_col
+jonohey_show("autumn")
+
+```
+
+```{r}
+jonohey_show("flying_fabric")
+```
+
+Here are all palettes
+
+```{r}
+invisible(lapply(jonohey_palettes(), jonohey_show))
+```
+
+
+
+```{r}
+# discrete
+library(ggplot2)
+ggplot(mtcars, aes(factor(cyl), mpg, fill = factor(cyl))) +
+  geom_boxplot() +
+  scale_fill_jonohey("suit")
+
+```
+
+
+```{r}
+# continuous example
+# DEMO ONLY
+# Probably not the best color choice!!!!
+ggplot(faithfuld, aes(eruptions, waiting, fill = density)) +
+  geom_raster() +
+  scale_fill_jonohey("surfing", discrete = FALSE)
+```
+
+
+## Using the theme
+
+We provide two different themes:
+
+* `theme_card()` will give you a nice round edge around the plot panel or/and plot background
+
+```{r}
+p <- ggplot(mtcars, aes(factor(cyl), mpg, fill = factor(cyl))) +
+  geom_boxplot(width = 0.7) +
+  scale_fill_jonohey("suit")
+
+# round panels
+p + theme_card()
+```
+
+To better understand the functioning of this theme, here are some examples:
+
+```{r}
+# Rounded panel only
+# same fill for plot bg
+p + theme_card(radius_panel = 50)
+# to show the different elements
+p + theme_card(radius_panel = 50, plot_bg_fill = "gray50")
+# Rounded plot background and rounded panel
+p + theme_card(radius_panel = 30, round_plot = TRUE, radius_plot = 70,
+               plot_bg_fill = "gray50")
+# Transparent outer card, rounded inner panel
+p + theme_card(radius_panel = 30, round_plot = FALSE, plot_bg_fill = NA)
+```
+
+
+* `theme_jonohey_wiggle()` will give you wiggly axis. 
+
+```{r}
+p + theme_axes_wiggle()
+```
+
+As of this version, we provide minimal wiggly configurations powered by `{elementalist}`[]. If you decide you need more grooves you can implement it yourself. For example:
+
+```{r}
+ p +
+  theme_axes_wiggle() + 
+  theme(panel.grid.major = elementalist::element_line_wiggle(3, 
+                                                             color = "gray20",
+                                                             linewidth = 0.2))
+```
+

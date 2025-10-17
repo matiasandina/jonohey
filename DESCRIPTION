@@ -1,0 +1,24 @@
+Package: jonohey
+Title: Jonohey Color Palettes
+Version: 0.0.0.9000
+Authors@R: 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+Description: Small set of hand picked color palettes with ggplot2 helpers.
+License: CC0
+Authors: person("Matias", "Andina", email = "matiasandina@gmail.com", role
+    = c("aut","cre"))
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Imports: 
+    ggplot2 (>= 3.5.2),
+    scales (>= 1.4.0),
+    elementalist
+Remotes:
+    teunbrand/elementalist
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr

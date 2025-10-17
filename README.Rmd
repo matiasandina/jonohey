@@ -1,0 +1,276 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.width  = 9,     # width in inches
+  fig.height = 6,     # adjust to your patchwork aspect
+  dpi        = 150,
+  fig.align  = "center",
+  out.width  = "100%",
+  fig.retina = 2
+)
+
+```
+
+# jonohey
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+<!-- badges: end -->
+
+The goal of jonohey is to provide color palettes inspired by Jono Hey's sketches at [Sketchplanations](https://sketchplanations.com/).
+
+## Installation
+
+You can install the development version of jonohey from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("matiasandina/jonohey")
+```
+
+## Example
+
+These examples display the color palettes themselves. For utilization of the package, check the docs. 
+
+```{r example}
+library(jonohey)
+library(patchwork)
+library(ggplot2)
+
+plot_box_mtcars <- function(palette_name) {
+  d <- transform(mtcars, cyl = factor(cyl))
+  ggplot(d, aes(cyl, mpg, fill = cyl)) +
+    geom_boxplot(width = 0.7) +
+    scale_fill_jonohey(palette_name) +
+    labs(title = "Boxplot: mtcars mpg by cyl") 
+}
+
+plot_box_mtcars("suit")
+
+```
+
+We provide themes to make this plot a bit more interesting (and closer in nature to their true sketch identity!).
+
+```{r sketch}
+# make a round panel!
+plot_box_mtcars("suit") + theme_card(radius_panel = 18)
+```
+
+```{r}
+# Make it more cartoonish
+plot_box_mtcars("suit") + theme_axes_wiggle()
+```
+
+Check the docs for more information.
+
+### Palettes
+
+We display available palettes with some toy examples below
+
+```{r include=FALSE}
+
+# one-row swatch plot
+show_swatches_gg <- function(palette_name) {
+  pal <- jonohey_pal(palette_name)
+  df <- data.frame(i = seq_along(pal), col = unname(pal), lab = names(pal))
+  ggplot(df) +
+    geom_rect(aes(xmin=i, xmax=i+1, ymin=-1.5, ymax=1.5, fill = col)) +
+    geom_text(aes(x=i + 0.5, y=-1.7, label=lab)) +
+    geom_text(aes(x=i + 0.5, y=-1.9, label=col)) +
+    scale_fill_identity() +
+    scale_x_continuous(expand = c(0,0)) +
+    scale_y_continuous(limits = c(-2.5, 2.5), expand = c(0, 0)) +
+    labs(title = palette_name,
+         x = "",
+         y = "") +
+    theme_card(radius_panel = 18) +
+    theme(axis.text = element_text(colour = "transparent"))
+}
+
+
+plot_box_mtcars <- function(palette_name) {
+  d <- transform(mtcars, cyl = factor(cyl))
+  ggplot(d, aes(cyl, mpg, fill = cyl)) +
+    geom_boxplot(width = 0.7) +
+    scale_fill_jonohey(palette_name) +
+    labs(title = "Boxplot: mtcars mpg by cyl") +
+    theme_card(radius_panel = 18)
+}
+
+plot_scatter_lm <- function(palette_name) {
+  d <- transform(mtcars, gear = factor(gear))
+  ggplot(d, aes(wt, mpg, colour = gear)) +
+    geom_point(size = 2, alpha = 0.9) +
+    geom_smooth(method = "lm", se = FALSE) +
+    scale_color_jonohey(palette_name) +
+    labs(title = "Scatter + LM: mpg ~ wt by gear") +
+    theme_card(radius_panel = 18)
+}
+
+
+# needs ggplot2 and ggbeeswarm
+set.seed(42)
+
+make_beeswarm_data6 <- function(n_per_group = 60) {
+  g <- factor(rep(LETTERS[1:6], each = n_per_group), levels = LETTERS[1:6])
+  idx <- as.integer(g)
+  # Funny backstory: groups trained at 6 different altitudes
+  # Higher letter means higher altitude, so higher scores on average
+  y <- 10 + 2.2 * idx + rnorm(length(idx), sd = 1.8)   # clear increasing pattern
+  data.frame(group = g, score = y)
+}
+
+plot_beeswarm6 <- function(palette_name = "color_wheel") {
+  stopifnot(requireNamespace("ggbeeswarm", quietly = TRUE))
+  d <- make_beeswarm_data6()
+  ggplot(d, aes(group, score, colour = group)) +
+    ggbeeswarm::geom_quasirandom(alpha = 0.6, size = 2, width = 0.25) +
+    ggplot2::stat_summary(fun = median, geom = "point", size = 3, shape = 95, colour = "black") +
+    ggplot2::stat_summary(fun = median, geom = "text", aes(label = sprintf("%.1f", after_stat(y))),
+                          vjust = -0.8, size = 3) +
+    scale_color_jonohey(palette_name) +
+    labs(title = "Beeswarm of toy data",
+         x = "Group", 
+         y = "Score") +
+    theme_card(radius_panel = 18) +
+    theme(legend.position = "none")
+}
+
+
+plot_ucb_dept <- function(palette_name) {
+  d <- as.data.frame(UCBAdmissions) |>
+    dplyr::filter(Admit == "Admitted") |> 
+    dplyr::summarise(.by= Dept, Freq = sum(Freq))
+  # sum or directly use: each row has Freq count
+  ggplot(d, aes(Dept, Freq, fill = Dept)) +
+    geom_col() +
+    scale_fill_jonohey(palette_name) +
+    labs(title = "UCB Admissions by Department", y = "Count") +
+    theme_card(radius_panel = 18)
+}
+
+
+```
+
+```{r, include = FALSE}
+library(patchwork)
+
+jonohey_showcase <- function(palette_name) {
+
+  pal <- jonohey_pal(palette_name)
+  img_path <- list.files(path = "img/", 
+                         pattern = glue::glue("{palette_name}"), full.names = TRUE)
+  k <- length(pal)
+
+  # a) sketch
+  #img <- magick::image_read(img_path) |>
+  #     magick::image_scale("2400x") |>
+  #     magick::image_background("none") |>
+  #     magick::image_extent("2600x", gravity = "center")
+  #rg <- grid::rasterGrob(as.raster(img), interpolate = TRUE)
+  #g_img <- patchwork::wrap_elements(rg, full = TRUE)
+  
+  g_img <- cowplot::ggdraw() + cowplot::draw_image(img_path) +
+    theme(
+      # harcoding the plot margin is not great but kinda works?
+      plot.margin = margin(0,0,40,0),
+      # keep to see how many px to add
+      #plot.background = element_rect(color = "black")
+      )
+  
+  # b) swatches
+  g_swatches <- show_swatches_gg(palette_name)
+
+  # c) boxplot
+  g_box <- plot_box_mtcars(palette_name)
+
+  # d) continuous with LM
+  g_lm <- plot_scatter_lm(palette_name)
+
+  # e) beeswarm for >=4
+  g_bee <- if (k >= 6) {
+    plot_beeswarm6(palette_name)
+  } else {
+    ggplot() + 
+      theme_void()
+  }
+
+  # f) stacked area for ≥6
+  g_bar <- if (k >= 6) {
+    plot_ucb_dept(palette_name)
+  } else {
+    ggplot() + 
+      theme_void() 
+  }
+
+col1 <- (g_img / plot_spacer() / g_lm) + plot_layout(heights = c(1, .1, 1))
+col2 <- (g_swatches / plot_spacer() / g_bee) + plot_layout(heights = c(1, .1, 1))
+col3 <- (g_box / plot_spacer() / g_bar) + plot_layout(heights = c(1, .1, 1))
+
+col1 | col2 | col3 + plot_layout(widths = c(1,1,1))
+}
+
+```
+
+```{r, include=FALSE, message=FALSE, warning=FALSE}
+pals_to_display <- jonohey_palettes()[3:length(jonohey_palettes())]
+
+plot_li <- purrr::map(
+  pals_to_display,
+  function(tt) jonohey_showcase(tt)
+)
+```
+
+
+```{r, include=FALSE, message=FALSE, warning=FALSE}
+export_showcase <- function(pal, plot) {
+  fn <- glue::glue("man/figures/{pal}.png")
+  invisible(
+    ggsave(
+      filename = fn,
+      plot     = plot,
+      width    = 12,   # inches
+      height   = 8,    # tune to your layout
+      dpi      = 200,
+      # bg       = "white", might mess with dark modes in github
+      device   = ragg::agg_png,
+      scale = 2
+)
+  )
+
+}
+
+
+purrr::walk2(pals_to_display, plot_li, export_showcase)
+
+```
+
+```{r, echo=FALSE, results='asis'}
+for (pal in pals_to_display) {
+  link <- readr::read_delim("links.csv", delim = ",", show_col_types = FALSE) |>
+    dplyr::filter(short_name == pal) |> 
+    dplyr::pull(url)
+
+  # write a markdown paragraph before the image
+  cat("\n\n### ", pal, "\n\n", sep = "")
+  cat("Below is the showcase for the **", pal, "** palette.\n\n", sep = "")
+  cat("You can find the source for the sketch inspiring the palette at [Sketchplanations](", link, ")", sep="")
+  
+  cat("\n\n---\n\n")
+
+  # include the image
+  cat(paste0("![](", glue::glue("man/figures/{pal}.png"), ")\n\n"), sep = "")
+
+  # add a bit of space after each image
+  cat("\n\n---\n\n")
+}
+```
+
+## Issues
+
+This is a preliminary release, file issues to improve the package.
