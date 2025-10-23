@@ -8,3 +8,4 @@
 ^links\.txt$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.github$
