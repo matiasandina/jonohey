@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   palettes: palettes.html
-last_built: 2025-10-23T01:35Z
+last_built: 2025-10-24T01:59Z
 urls:
   reference: https://matiasandina.github.io/jonohey/reference
   article: https://matiasandina.github.io/jonohey/articles
