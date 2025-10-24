@@ -2,3 +2,9 @@ url: https://matiasandina.github.io/jonohey/
 template:
   bootstrap: 5
 
+articles:
+  - title: "Basic Usage"
+    contents:
+      - "usage" # Name of your Rmd article file (without extension)
+    toc:
+      depth: 3

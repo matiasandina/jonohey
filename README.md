@@ -15,7 +15,7 @@ sketches at [Sketchplanations](https://sketchplanations.com/).
 ## Installation
 
 You can install the development version of jonohey from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/matiasandina/jonohey) with:
 
 ``` r
 # install.packages("pak")
@@ -25,7 +25,7 @@ pak::pak("matiasandina/jonohey")
 ## Example
 
 These examples display the color palettes themselves. For utilization of
-the package, check the docs.
+the package, check [the docs](matiasandina.github.io/jonohey/) 📖.
 
 ``` r
 library(jonohey)
@@ -43,7 +43,7 @@ plot_box_mtcars <- function(palette_name) {
 plot_box_mtcars("suit")
 ```
 
-<img src="README_files/figure-gfm/example-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-example-1.png" width="100%" style="display: block; margin: auto;" />
 
 We provide themes to make this plot a bit more interesting (and closer
 in nature to their true sketch identity!).
@@ -53,16 +53,16 @@ in nature to their true sketch identity!).
 plot_box_mtcars("suit") + theme_card(radius_panel = 18)
 ```
 
-<img src="README_files/figure-gfm/sketch-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-sketch-1.png" width="100%" style="display: block; margin: auto;" />
 
 ``` r
 # Make it more cartoonish
 plot_box_mtcars("suit") + theme_axes_wiggle()
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" />
 
-Check the docs for more information.
+Check 📖 [the docs](matiasandina.github.io/jonohey/)!
 
 ### Palettes
 

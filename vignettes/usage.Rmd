@@ -1,8 +1,8 @@
 ---
-title: "palettes"
+title: "Basic Usage"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{palettes}
+  %\VignetteIndexEntry{basic-usage}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,28 +14,43 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Palettes
+
+At its core, `{jonohey}` is about color palettes. You can display the palettes using the helper function `jonohey_show()`
+
 ```{r setup}
 library(jonohey)
-```
-
-
-```{r}
 # show_col
 jonohey_show("autumn")
 
 ```
 
+Here's another example:
+
 ```{r}
 jonohey_show("flying_fabric")
 ```
 
-Here are all palettes
+### All palettes
+
+Here are all available palettes by name.
+
+```{r}
+jonohey_palettes()
+```
+
+
+> Notice that as of this version, we store two single colors in palettes for convenience. One of them is the background for the theme. The other one is the ba. It's likely that these colors will be internalized in the future 
+
+Take a look at all palettes in full color :)
 
 ```{r}
 invisible(lapply(jonohey_palettes(), jonohey_show))
 ```
 
+## Applying palettes
 
+We provide `scale_fill_jonohey()` and `scale_color_jonohey()` to be able to integrate this package into `ggplot2`. Here's an example
 
 ```{r}
 # discrete
@@ -45,6 +60,8 @@ ggplot(mtcars, aes(factor(cyl), mpg, fill = factor(cyl))) +
   scale_fill_jonohey("suit")
 
 ```
+
+In principle, one could use these palettes for continuous mapping too. You are advised against doing so, but nobody is really stopping you right now.
 
 
 ```{r}
@@ -68,19 +85,19 @@ p <- ggplot(mtcars, aes(factor(cyl), mpg, fill = factor(cyl))) +
   geom_boxplot(width = 0.7) +
   scale_fill_jonohey("suit")
 
-# round panels
-p + theme_card()
+# round panel and plot
+p + theme_card(round_plot = TRUE, radius_plot = 50)
 ```
 
 To better understand the functioning of this theme, here are some examples:
 
 ```{r}
 # Rounded panel only
-# same fill for plot bg
-p + theme_card(radius_panel = 50)
-# to show the different elements
-p + theme_card(radius_panel = 50, plot_bg_fill = "gray50")
+p + theme_card(radius_panel = 20)
+# plot not rounded, fill with gray50
+p + theme_card(radius_panel = 20, plot_bg_fill = "gray50")
 # Rounded plot background and rounded panel
+# increased rounding for both
 p + theme_card(radius_panel = 30, round_plot = TRUE, radius_plot = 70,
                plot_bg_fill = "gray50")
 # Transparent outer card, rounded inner panel
@@ -94,12 +111,14 @@ p + theme_card(radius_panel = 30, round_plot = FALSE, plot_bg_fill = NA)
 p + theme_axes_wiggle()
 ```
 
-As of this version, we provide minimal wiggly configurations powered by `{elementalist}`[]. If you decide you need more grooves you can implement it yourself. For example:
+As of this version, we provide minimal wiggly configurations powered by [`{elementalist}`](https://teunbrand.github.io/elementalist/index.html). If you decide you need more grooves you can implement it yourself. 
+
+For example:
 
 ```{r}
  p +
   theme_axes_wiggle() + 
-  theme(panel.grid.major = elementalist::element_line_wiggle(3, 
+  theme(panel.grid.major = elementalist::element_line_wiggle(2, 
                                                              color = "gray20",
                                                              linewidth = 0.2))
 ```

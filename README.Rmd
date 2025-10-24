@@ -6,8 +6,9 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  fig.width  = 9,     # width in inches
-  fig.height = 6,     # adjust to your patchwork aspect
+  fig.path   = "man/figures/README-",
+  fig.width  = 9,
+  fig.height = 6,
   dpi        = 150,
   fig.align  = "center",
   out.width  = "100%",
@@ -26,7 +27,7 @@ The goal of jonohey is to provide color palettes inspired by Jono Hey's sketches
 
 ## Installation
 
-You can install the development version of jonohey from [GitHub](https://github.com/) with:
+You can install the development version of jonohey from [GitHub](https://github.com/matiasandina/jonohey) with:
 
 ``` r
 # install.packages("pak")
@@ -35,7 +36,7 @@ pak::pak("matiasandina/jonohey")
 
 ## Example
 
-These examples display the color palettes themselves. For utilization of the package, check the docs. 
+These examples display the color palettes themselves. For utilization of the package, check [the docs](matiasandina.github.io/jonohey/) 📖. 
 
 ```{r example}
 library(jonohey)
@@ -66,7 +67,7 @@ plot_box_mtcars("suit") + theme_card(radius_panel = 18)
 plot_box_mtcars("suit") + theme_axes_wiggle()
 ```
 
-Check the docs for more information.
+Check 📖 [the docs](matiasandina.github.io/jonohey/)!
 
 ### Palettes
 
@@ -105,23 +106,20 @@ plot_box_mtcars <- function(palette_name) {
 plot_scatter_lm <- function(palette_name) {
   d <- transform(mtcars, gear = factor(gear))
   ggplot(d, aes(wt, mpg, colour = gear)) +
-    geom_point(size = 2, alpha = 0.9) +
-    geom_smooth(method = "lm", se = FALSE) +
+    geom_point(size = 3, alpha = 0.9) +
+    geom_smooth(method = "lm", se = FALSE, linewidth = 1) +
     scale_color_jonohey(palette_name) +
     labs(title = "Scatter + LM: mpg ~ wt by gear") +
     theme_card(radius_panel = 18)
 }
 
 
-# needs ggplot2 and ggbeeswarm
-set.seed(42)
+set.seed(2025-10-22)
 
-make_beeswarm_data6 <- function(n_per_group = 60) {
-  g <- factor(rep(LETTERS[1:6], each = n_per_group), levels = LETTERS[1:6])
+make_beeswarm_data6 <- function(n_per_group = 60, n = 4) {
+  g <- factor(rep(LETTERS[1:n], each = n_per_group), levels = LETTERS[1:4])
   idx <- as.integer(g)
-  # Funny backstory: groups trained at 6 different altitudes
-  # Higher letter means higher altitude, so higher scores on average
-  y <- 10 + 2.2 * idx + rnorm(length(idx), sd = 1.8)   # clear increasing pattern
+  y <- 10 + 2.2 * idx + rnorm(length(idx), sd = 1.8)
   data.frame(group = g, score = y)
 }
 
