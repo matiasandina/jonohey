@@ -2,7 +2,7 @@ Package: jonohey
 Title: Jonohey Color Palettes
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+    person("Matias", "Andina", , "matiasandina@gmail.com", role = c("aut", "cre"))
 Description: Small set of hand picked color palettes with ggplot2 helpers.
 License: CC0
 Authors: person("Matias", "Andina", email = "matiasandina@gmail.com", role
