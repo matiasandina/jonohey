@@ -2,6 +2,7 @@
 
 export(jonohey_pal)
 export(jonohey_palettes)
+export(jonohey_save_png)
 export(jonohey_show)
 export(jonohey_use_ragg)
 export(scale_color_jonohey)
