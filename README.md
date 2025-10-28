@@ -55,6 +55,10 @@ plot_box_mtcars("suit") + theme_card(radius_panel = 18)
 
 <img src="man/figures/README-sketch-1.png" width="100%" style="display: block; margin: auto;" />
 
+> Typography matches exactly in saved figures or Rmd configured with
+> `dev = "ragg_png"`. For interactive plotting,
+> `call jonohey_use_ragg()` or install Fuzzy Bubbles system-wide.
+
 ``` r
 # Make it more cartoonish
 plot_box_mtcars("suit") + theme_axes_wiggle()
@@ -145,6 +149,25 @@ You can find the source for the sketch inspiring the palette at
 ![](man/figures/surfing.png)
 
 ------------------------------------------------------------------------
+
+## Using ragg for consistent typography
+
+Since we provide a custom font (“Fuzzy Bubbles”) to match a sketchy
+look, we recommend using the `ragg` graphics device for saving plots to
+ensure consistent typography. You can do this by calling
+`jonohey_use_ragg()` once in your R session, or by specifying
+`dev = "ragg_png"` in your R Markdown document’s chunk options.
+
+In Rstudio, you can also set `ragg` as the default graphics device in
+the Global Options under the “General” section. Check the [Ragg’s
+documentation](https://ragg.r-lib.org/index.html?q=rstu#use-ragg-in-rstudio)
+for more details.
+
+In Positron, it seems that `ragg` is used by default if ragg \>= 1.4
+(see [this PR](https://github.com/posit-dev/ark/pull/763)). That’s why
+we require ragg \>= 1.4 in the DESCRIPTION. We have tested
+`jonohey_use_ragg()` and it seems to work, but the scaling is worse than
+in RStudio.
 
 ## Issues
 

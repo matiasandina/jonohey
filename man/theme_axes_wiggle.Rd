@@ -5,13 +5,13 @@
 \title{Jonohey axes-wiggle theme}
 \usage{
 theme_axes_wiggle(
-  base_size = 16,
-  base_family = "",
-  radius = 20,
-  border_colour = "grey20",
-  border_linewidth = 1,
+  base_size = 12,
+  base_family = "Fuzzy Bubbles",
   amount = 3,
-  wiggle_n = 100
+  wiggle_n = 100,
+  linewidth = 1,
+  line_color = "gray20",
+  ...
 )
 }
 \arguments{
@@ -19,15 +19,15 @@ theme_axes_wiggle(
 
 \item{base_family}{base font family}
 
-\item{radius}{corner radius in points for panel (if elementalist available)}
-
-\item{border_colour}{panel border colour}
-
-\item{border_linewidth}{panel border linewidth}
-
 \item{amount}{wiggle intensity (approx. pixels)}
 
 \item{wiggle_n}{number of control points for the wiggle}
+
+\item{linewidth}{linewidth to be passed to axes}
+
+\item{line_color}{color to be passed to axes}
+
+\item{...}{passed to ggplot2 theme constructors}
 }
 \description{
 Only the axes wiggle (cartoony vibe) using elementalist. Geoms remain straight.
