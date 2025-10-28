@@ -11,3 +11,7 @@
 ^\.github$
 ^doc$
 ^Meta$
+
+scripts/
+links.csv
+README_files/
