@@ -42,13 +42,13 @@ No grid, no ticks. Rounded panel optional (same args as round theme).</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">theme_axes_wiggle</span><span class="op">(</span></span>
-<span>  base_size <span class="op">=</span> <span class="fl">16</span>,</span>
-<span>  base_family <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  radius <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  border_colour <span class="op">=</span> <span class="st">"grey20"</span>,</span>
-<span>  border_linewidth <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  base_size <span class="op">=</span> <span class="fl">12</span>,</span>
+<span>  base_family <span class="op">=</span> <span class="st">"Fuzzy Bubbles"</span>,</span>
 <span>  amount <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  wiggle_n <span class="op">=</span> <span class="fl">100</span></span>
+<span>  wiggle_n <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  linewidth <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  line_color <span class="op">=</span> <span class="st">"gray20"</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -64,24 +64,24 @@ No grid, no ticks. Rounded panel optional (same args as round theme).</p>
 <dd><p>base font family</p></dd>
 
 
-<dt id="arg-radius">radius<a class="anchor" aria-label="anchor" href="#arg-radius"></a></dt>
-<dd><p>corner radius in points for panel (if elementalist available)</p></dd>
-
-
-<dt id="arg-border-colour">border_colour<a class="anchor" aria-label="anchor" href="#arg-border-colour"></a></dt>
-<dd><p>panel border colour</p></dd>
-
-
-<dt id="arg-border-linewidth">border_linewidth<a class="anchor" aria-label="anchor" href="#arg-border-linewidth"></a></dt>
-<dd><p>panel border linewidth</p></dd>
-
-
 <dt id="arg-amount">amount<a class="anchor" aria-label="anchor" href="#arg-amount"></a></dt>
 <dd><p>wiggle intensity (approx. pixels)</p></dd>
 
 
 <dt id="arg-wiggle-n">wiggle_n<a class="anchor" aria-label="anchor" href="#arg-wiggle-n"></a></dt>
 <dd><p>number of control points for the wiggle</p></dd>
+
+
+<dt id="arg-linewidth">linewidth<a class="anchor" aria-label="anchor" href="#arg-linewidth"></a></dt>
+<dd><p>linewidth to be passed to axes</p></dd>
+
+
+<dt id="arg-line-color">line_color<a class="anchor" aria-label="anchor" href="#arg-line-color"></a></dt>
+<dd><p>color to be passed to axes</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>passed to ggplot2 theme constructors</p></dd>
 
 </dl></div>
     <div class="section level2">

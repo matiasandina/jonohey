@@ -83,6 +83,9 @@
 <code class="sourceCode R"><span><span class="co"># make a round panel!</span></span>
 <span><span class="fu">plot_box_mtcars</span><span class="op">(</span><span class="st">"suit"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="reference/theme_card.html">theme_card</a></span><span class="op">(</span>radius_panel <span class="op">=</span> <span class="fl">18</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-sketch-1.png" width="100%" style="display: block; margin: auto;"></p>
+<blockquote>
+<p>Typography matches exactly in saved figures or Rmd configured with <code>dev = "ragg_png"</code>. For interactive plotting, <code>call jonohey_use_ragg()</code> or install Fuzzy Bubbles system-wide.</p>
+</blockquote>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Make it more cartoonish</span></span>
 <span><span class="fu">plot_box_mtcars</span><span class="op">(</span><span class="st">"suit"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="reference/theme_axes_wiggle.html">theme_axes_wiggle</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -147,6 +150,13 @@
 <p><img src="reference/figures/surfing.png"></p>
 <hr>
 </div>
+</div>
+<div class="section level2">
+<h2 id="using-ragg-for-consistent-typography">Using ragg for consistent typography<a class="anchor" aria-label="anchor" href="#using-ragg-for-consistent-typography"></a>
+</h2>
+<p>Since we provide a custom font (“Fuzzy Bubbles”) to match a sketchy look, we recommend using the <code>ragg</code> graphics device for saving plots to ensure consistent typography. You can do this by calling <code><a href="reference/jonohey_use_ragg.html">jonohey_use_ragg()</a></code> once in your R session, or by specifying <code>dev = "ragg_png"</code> in your R Markdown document’s chunk options.</p>
+<p>In Rstudio, you can also set <code>ragg</code> as the default graphics device in the Global Options under the “General” section. Check the <a href="https://ragg.r-lib.org/index.html?q=rstu#use-ragg-in-rstudio" class="external-link">Ragg’s documentation</a> for more details.</p>
+<p>In Positron, it seems that <code>ragg</code> is used by default if ragg &gt;= 1.4 (see <a href="https://github.com/posit-dev/ark/pull/763" class="external-link">this PR</a>). That’s why we require ragg &gt;= 1.4 in the DESCRIPTION. We have tested <code><a href="reference/jonohey_use_ragg.html">jonohey_use_ragg()</a></code> and it seems to work, but the scaling is worse than in RStudio.</p>
 </div>
 <div class="section level2">
 <h2 id="issues">Issues<a class="anchor" aria-label="anchor" href="#issues"></a>
