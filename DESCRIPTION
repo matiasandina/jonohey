@@ -13,7 +13,10 @@ RoxygenNote: 7.3.3
 Imports: 
     ggplot2 (>= 3.5.2),
     scales (>= 1.4.0),
-    elementalist
+    elementalist,
+    systemfonts,
+    ragg (>= 1.4.0),
+    cli
 Remotes:
     teunbrand/elementalist
 Suggests: 
