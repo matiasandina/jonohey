@@ -12,6 +12,16 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 The goal of jonohey is to provide color palettes inspired by Jono Hey’s
 sketches at [Sketchplanations](https://sketchplanations.com/).
 
+<div class="callout">
+
+These palettes were not selected following criteria of color theory or
+accessibility. You might find that separability is not grat, especially
+when the number of colors is large. These palettes are intended for fun
+and to add a sketchy aesthetic to your visualizations. Use what works,
+toss the rest. Cution advised in professional settings!
+
+</div>
+
 ## Installation
 
 You can install the development version of jonohey from
@@ -28,7 +38,7 @@ These examples display the color palettes themselves. For utilization of
 the package, check [the docs](matiasandina.github.io/jonohey/) 📖.
 
 ``` r
-library(jonohey)
+library(jonohey, quietly = TRUE)
 library(patchwork)
 library(ggplot2)
 
@@ -150,6 +160,80 @@ You can find the source for the sketch inspiring the palette at
 
 ------------------------------------------------------------------------
 
+There are two palettes without associated images: “light” and “dark”.
+They contain 9 colors each, in light and dark tones respectively.
+
+``` r
+jonohey_show("light")
+```
+
+<img src="man/figures/README-lightpal-1.png" width="100%" style="display: block; margin: auto;" />
+
+``` r
+jonohey_show("dark")
+```
+
+<img src="man/figures/README-darkpal-1.png" width="100%" style="display: block; margin: auto;" />
+
+These palettes have 9 colors, which can be useful for plotting
+categorical data with many levels.
+
+``` r
+p_bar <- dplyr::storms  |> 
+  dplyr::count(status) |>
+  dplyr::mutate(status = forcats::fct_reorder(status, n, .desc = TRUE)) |>
+  ggplot(aes(n, status, fill=status)) + 
+  geom_col(show.legend = FALSE, color = "black") +
+  theme_card(base_size = 12, radius_panel = 10)
+
+xy_summ <- dplyr::storms |> 
+  dplyr::group_by(status) |> 
+  dplyr::summarise(
+    n = dplyr::n(),
+    wind_mean = mean(wind, na.rm = TRUE),
+    wind_sd   = sd(wind,   na.rm = TRUE),
+    pres_mean = mean(pressure, na.rm = TRUE),
+    pres_sd   = sd(pressure,   na.rm = TRUE),
+    .groups = "drop"
+  ) |> 
+  dplyr::mutate(
+    wind_ci = qt(0.999, df = pmax(n - 1, 1)) * wind_sd / sqrt(n),
+    pres_ci = qt(0.999, df = pmax(n - 1, 1)) * pres_sd / sqrt(n),
+    xmin = wind_mean - wind_ci, xmax = wind_mean + wind_ci,
+    ymin = pres_mean - pres_ci, ymax = pres_mean + pres_ci
+  )
+
+p <- ggplot(xy_summ, aes(wind_mean, pres_mean, fill = status)) +
+  geom_point(size = 3, pch = 21) +
+  geom_errorbar(aes(ymin = ymin, ymax = ymax, color = status), width = 0, show.legend = FALSE) +
+  geom_errorbarh(aes(xmin = xmin, xmax = xmax, color = status), height = 0, show.legend = FALSE) +
+  theme_card(base_size = 12, , radius_panel = 10) +
+  labs(x = "Wind", y = "Pressure", color = "Status") +
+  theme(legend.position = "none",
+  )
+
+
+p_bar + 
+  scale_fill_jonohey("light") +
+  labs(title = "Using the 'light' palette in dplyr::storms data") +
+p + 
+  scale_fill_jonohey("light") +
+  scale_color_jonohey("light")
+```
+
+<img src="man/figures/README-exampe9_light-1.png" width="100%" style="display: block; margin: auto;" />
+
+``` r
+p_bar + 
+  scale_fill_jonohey("dark") +
+  labs(title = "Using the 'dark' palette in dplyr::storms data") +
+p + 
+  scale_fill_jonohey("dark") +
+  scale_color_jonohey("dark") 
+```
+
+<img src="man/figures/README-exampe9_dark-1.png" width="100%" style="display: block; margin: auto;" />
+
 ## Using ragg for consistent typography
 
 Since we provide a custom font (“Fuzzy Bubbles”) to match a sketchy
@@ -172,3 +256,15 @@ in RStudio.
 ## Issues
 
 This is a preliminary release, file issues to improve the package.
+
+## Acknowledgements
+
+<div class="callout">
+
+Shoutout to Jono Hey for the inspiration and permission to use his
+sketches as a basis for color palettes!
+
+You can find Jono Hey’s work at
+[Sketchplanations](https://sketchplanations.com/).
+
+</div>
