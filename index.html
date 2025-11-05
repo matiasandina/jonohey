@@ -51,6 +51,9 @@
 <!-- badges: start -->
 
 <p>The goal of jonohey is to provide color palettes inspired by Jono Hey’s sketches at <a href="https://sketchplanations.com/" class="external-link">Sketchplanations</a>.</p>
+<div class="callout">
+<p>These palettes were not selected following criteria of color theory or accessibility. You might find that separability is not grat, especially when the number of colors is large. These palettes are intended for fun and to add a sketchy aesthetic to your visualizations. Use what works, toss the rest. Cution advised in professional settings!</p>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -64,7 +67,7 @@
 </h2>
 <p>These examples display the color palettes themselves. For utilization of the package, check <a href="matiasandina.github.io/jonohey/">the docs</a> 📖.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://matiasandina.github.io/jonohey/">jonohey</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://matiasandina.github.io/jonohey/">jonohey</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
@@ -149,6 +152,64 @@
 <hr>
 <p><img src="reference/figures/surfing.png"></p>
 <hr>
+<p>There are two palettes without associated images: “light” and “dark”. They contain 9 colors each, in light and dark tones respectively.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/jonohey_show.html">jonohey_show</a></span><span class="op">(</span><span class="st">"light"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-lightpal-1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/jonohey_show.html">jonohey_show</a></span><span class="op">(</span><span class="st">"dark"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-darkpal-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p>These palettes have 9 colors, which can be useful for plotting categorical data with many levels.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p_bar</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va">storms</span>  <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">count</span><span class="op">(</span><span class="va">status</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">mutate</span><span class="op">(</span>status <span class="op">=</span> <span class="fu">forcats</span><span class="fu">::</span><span class="fu">fct_reorder</span><span class="op">(</span><span class="va">status</span>, <span class="va">n</span>, .desc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">status</span>, fill<span class="op">=</span><span class="va">status</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">FALSE</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/theme_card.html">theme_card</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span>, radius_panel <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">xy_summ</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va">storms</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">group_by</span><span class="op">(</span><span class="va">status</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">summarise</span><span class="op">(</span></span>
+<span>    n <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">n</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    wind_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">wind</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    wind_sd   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">wind</span>,   na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    pres_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">pressure</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    pres_sd   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">pressure</span>,   na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    .groups <span class="op">=</span> <span class="st">"drop"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">mutate</span><span class="op">(</span></span>
+<span>    wind_ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html" class="external-link">qt</a></span><span class="op">(</span><span class="fl">0.999</span>, df <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">wind_sd</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,</span>
+<span>    pres_ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html" class="external-link">qt</a></span><span class="op">(</span><span class="fl">0.999</span>, df <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">pres_sd</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,</span>
+<span>    xmin <span class="op">=</span> <span class="va">wind_mean</span> <span class="op">-</span> <span class="va">wind_ci</span>, xmax <span class="op">=</span> <span class="va">wind_mean</span> <span class="op">+</span> <span class="va">wind_ci</span>,</span>
+<span>    ymin <span class="op">=</span> <span class="va">pres_mean</span> <span class="op">-</span> <span class="va">pres_ci</span>, ymax <span class="op">=</span> <span class="va">pres_mean</span> <span class="op">+</span> <span class="va">pres_ci</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">xy_summ</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wind_mean</span>, <span class="va">pres_mean</span>, fill <span class="op">=</span> <span class="va">status</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, pch <span class="op">=</span> <span class="fl">21</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">ymin</span>, ymax <span class="op">=</span> <span class="va">ymax</span>, color <span class="op">=</span> <span class="va">status</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbarh</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">xmin</span>, xmax <span class="op">=</span> <span class="va">xmax</span>, color <span class="op">=</span> <span class="va">status</span><span class="op">)</span>, height <span class="op">=</span> <span class="fl">0</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/theme_card.html">theme_card</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span>, , radius_panel <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Wind"</span>, y <span class="op">=</span> <span class="st">"Pressure"</span>, color <span class="op">=</span> <span class="st">"Status"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">p_bar</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/scale_fill_jonohey.html">scale_fill_jonohey</a></span><span class="op">(</span><span class="st">"light"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Using the 'light' palette in dplyr::storms data"</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="va">p</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/scale_fill_jonohey.html">scale_fill_jonohey</a></span><span class="op">(</span><span class="st">"light"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/scale_color_jonohey.html">scale_color_jonohey</a></span><span class="op">(</span><span class="st">"light"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-exampe9_light-1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p_bar</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/scale_fill_jonohey.html">scale_fill_jonohey</a></span><span class="op">(</span><span class="st">"dark"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Using the 'dark' palette in dplyr::storms data"</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="va">p</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/scale_fill_jonohey.html">scale_fill_jonohey</a></span><span class="op">(</span><span class="st">"dark"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/scale_color_jonohey.html">scale_color_jonohey</a></span><span class="op">(</span><span class="st">"dark"</span><span class="op">)</span> </span></code></pre></div>
+<p><img src="reference/figures/README-exampe9_dark-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -162,6 +223,14 @@
 <h2 id="issues">Issues<a class="anchor" aria-label="anchor" href="#issues"></a>
 </h2>
 <p>This is a preliminary release, file issues to improve the package.</p>
+</div>
+<div class="section level2">
+<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h2>
+<div class="callout">
+<p>Shoutout to Jono Hey for the inspiration and permission to use his sketches as a basis for color palettes!</p>
+<p>You can find Jono Hey’s work at <a href="https://sketchplanations.com/" class="external-link">Sketchplanations</a>.</p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
